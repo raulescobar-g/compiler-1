@@ -1,7 +1,7 @@
 use clap::Parser;
-use color_eyre::Result;
 use compiler_1::codegen::c_codegen;
 use compiler_1::parser::parse_toplevel;
+use std::error::Error;
 use std::fs::File;
 use std::io::Write;
 use std::path::PathBuf;
@@ -12,7 +12,7 @@ use compiler_1::lexer::*;
 use compiler_1::CodeFile;
 use compiler_1::Config;
 
-fn main() -> Result<ExitCode> {
+fn main() -> Result<ExitCode, Box<dyn Error>> {
     let config = Config::parse();
 
     let file = CodeFile::new(&config.entry)?;
@@ -39,10 +39,3 @@ fn main() -> Result<ExitCode> {
 
     return Ok(ExitCode::SUCCESS);
 }
-
-// const : Tokens
-//
-//
-// let lexed_tokens =   lexical_analysis( Read )?;
-// let ast =            parse_tokens( IntoIterator<lexed_tokens> )?;
-// let c_code =         transpile_to_c( Codegen )?;

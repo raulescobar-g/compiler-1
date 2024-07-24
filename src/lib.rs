@@ -1,8 +1,6 @@
 #![feature(slice_split_once)]
 
 use clap::Parser;
-use color_eyre::*;
-use eyre::Context;
 use std::{fs::File, io::Read, path::PathBuf};
 
 #[derive(Parser, Debug, Clone)]
@@ -30,11 +28,9 @@ impl<R: Read> Read for CodeFile<R> {
 }
 
 impl CodeFile<File> {
-    pub fn new(path: impl ToString) -> color_eyre::Result<Self> {
+    pub fn new(path: impl ToString) -> Result<Self, std::io::Error> {
         let path_buf = PathBuf::from(path.to_string());
-        let file = File::open(path.to_string())
-            .wrap_err(format!("Error opening file {}", path.to_string()))?;
-
+        let file = File::open(path.to_string())?;
         Ok(Self { path_buf, file })
     }
 }
