@@ -1,5 +1,5 @@
 # Compiler 
-## c like lang (but worse) 
+c like lang (but worse) 
 
 ### Motivation
 I like c, but i also hate c
